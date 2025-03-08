@@ -1,7 +1,6 @@
 package deepl
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -20,6 +19,7 @@ func NewAPIClient(authKey string, apiHostname string, requester requester.Reques
 	return &APIClient{
 		authKey:     authKey,
 		apiHostname: apiHostname,
+		requester:   requester,
 	}
 }
 
@@ -29,7 +29,7 @@ func (a *APIClient) Translate(requestPayload dto.Request) (*dto.Response, error)
 		return nil, fmt.Errorf("error marshalling request body: %v", err)
 	}
 
-	req, err := a.requester.CreateRequest(http.MethodPost, a.apiHostname, bytes.NewBuffer(reqBody))
+	req, err := a.requester.CreateRequest(http.MethodPost, a.apiHostname, reqBody)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %v", err)
 	}
