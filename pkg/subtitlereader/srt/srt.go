@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	subtitlereader "github.com/arturbaccarin/go-subtitle-translator/pkg/subtitle_reader"
+	"github.com/arturbaccarin/go-subtitle-translator/pkg/subtitlereader"
 )
 
 type Reader struct {
@@ -16,9 +16,7 @@ type Reader struct {
 }
 
 func NewReader(filePath string) *Reader {
-	return &Reader{
-		FilePath: filePath,
-	}
+	return &Reader{}
 }
 
 func (r *Reader) Read() ([]*subtitlereader.Subtitle, error) {

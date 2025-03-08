@@ -29,7 +29,9 @@ func (a *APIClient) Translate(requestPayload dto.Request) (*dto.Response, error)
 		return nil, fmt.Errorf("error marshalling request body: %v", err)
 	}
 
-	req, err := a.requester.CreateRequest(http.MethodPost, a.apiHostname, reqBody)
+	url := fmt.Sprintf("%s/v2/translate", a.apiHostname)
+
+	req, err := a.requester.CreateRequest(http.MethodPost, url, reqBody)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %v", err)
 	}

@@ -1,7 +1,7 @@
 package nethttp
 
 import (
-	"io"
+	"bytes"
 	"net/http"
 )
 
@@ -12,8 +12,8 @@ func NewNetHTTPRequester() *NetHTTPRequester {
 	return &NetHTTPRequester{}
 }
 
-func (n *NetHTTPRequester) CreateRequest(method string, url string, body io.Reader) (*http.Request, error) {
-	return http.NewRequest(method, url, body)
+func (n *NetHTTPRequester) CreateRequest(method string, url string, body []byte) (*http.Request, error) {
+	return http.NewRequest(method, url, bytes.NewReader(body))
 }
 
 func (n *NetHTTPRequester) Do(req *http.Request, headers map[string]string) (*http.Response, error) {
