@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/arturbaccarin/go-subtitle-translator/pkg/deepl/dto"
+	"github.com/arturbaccarin/go-subtitle-translator/pkg/translator/dto"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )

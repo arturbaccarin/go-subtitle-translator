@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/arturbaccarin/go-subtitle-translator/pkg/deepl/dto"
 	"github.com/arturbaccarin/go-subtitle-translator/pkg/requester"
+	"github.com/arturbaccarin/go-subtitle-translator/pkg/translator/dto"
 )
 
 type APIClient struct {
