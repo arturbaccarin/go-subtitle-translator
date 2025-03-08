@@ -16,7 +16,9 @@ type Reader struct {
 }
 
 func NewReader(filePath string) *Reader {
-	return &Reader{}
+	return &Reader{
+		FilePath: filePath,
+	}
 }
 
 func (r *Reader) Read() ([]*subtitlereader.Subtitle, error) {
