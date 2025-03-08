@@ -3,6 +3,7 @@ package srt
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 	"regexp"
 	"strconv"
@@ -22,6 +23,7 @@ func NewReader(filePath string) *Reader {
 }
 
 func (r *Reader) Read() ([]*subtitlereader.Subtitle, error) {
+	log.Printf("Reading file %s", r.FilePath)
 
 	file, err := os.Open(r.FilePath)
 	if err != nil {
@@ -61,5 +63,6 @@ func (r *Reader) Read() ([]*subtitlereader.Subtitle, error) {
 		}
 	}
 
+	log.Printf("Read %d subtitles", len(subtitles))
 	return subtitles, nil
 }

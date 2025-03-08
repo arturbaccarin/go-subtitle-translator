@@ -11,12 +11,14 @@ import (
 )
 
 func main() {
-	err := godotenv.Load("../.env")
+	wd, _ := os.Getwd()
+
+	err := godotenv.Load(wd + "/.env")
 	if err != nil {
 		panic("Error loading .env file")
 	}
 
-	myFile := "../test.srt"
+	myFile := wd + "/test.srt"
 
 	reader := srt.NewReader(myFile)
 	requester := nethttp.NewNetHTTPRequester()

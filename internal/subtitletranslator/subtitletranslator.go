@@ -69,8 +69,8 @@ func (st *SubtitleTranslator) SaveSRT(subtitles []*subtitlereader.Subtitle) erro
 func (st *SubtitleTranslator) parseContent(subtitles []*subtitlereader.Subtitle) []string {
 	linesToTranslate := make([]string, len(subtitles))
 
-	for _, subtitle := range subtitles {
-		linesToTranslate = append(linesToTranslate, subtitle.Content)
+	for i, subtitle := range subtitles {
+		linesToTranslate[i] = subtitle.Content
 	}
 
 	return linesToTranslate
