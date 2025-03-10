@@ -2,7 +2,9 @@ package subtitletranslator
 
 import (
 	"fmt"
+	"log"
 	"os"
+	"strings"
 
 	"github.com/arturbaccarin/go-subtitle-translator/pkg/subtitlereader"
 	"github.com/arturbaccarin/go-subtitle-translator/pkg/translator"
@@ -47,7 +49,8 @@ func (st *SubtitleTranslator) Translate() ([]*subtitlereader.Subtitle, error) {
 }
 
 func (st *SubtitleTranslator) SaveSRT(subtitles []*subtitlereader.Subtitle) error {
-	filename := st.fileToTranslate + "_translated.srt"
+	filename := strings.Split(st.fileToTranslate, ".")[0]
+	filename = filename + "_translated.srt"
 
 	file, err := os.Create(filename)
 	if err != nil {
@@ -63,15 +66,21 @@ func (st *SubtitleTranslator) SaveSRT(subtitles []*subtitlereader.Subtitle) erro
 		}
 	}
 
+	log.Printf("Translated subtitles saved to %s\n", filename)
+
 	return nil
 }
 
 func (st *SubtitleTranslator) parseContent(subtitles []*subtitlereader.Subtitle) []string {
 	linesToTranslate := make([]string, len(subtitles))
+	var charactersCount int
 
 	for i, subtitle := range subtitles {
+		charactersCount += len(subtitle.Content)
 		linesToTranslate[i] = subtitle.Content
 	}
+
+	log.Printf("Characters to translate: %d\n", charactersCount)
 
 	return linesToTranslate
 }
