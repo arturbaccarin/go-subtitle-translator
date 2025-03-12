@@ -12,13 +12,13 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		Title   string
 		Heading string
 	}{
-		Title:   "Front Page",
-		Heading: "Welcome to the front page",
+		Title:   "Go Subtitle Translator",
+		Heading: "Translate your SRT subtitles",
 	}
 
 	wd, _ := os.Getwd()
 
-	tmpl, err := template.ParseFiles(wd + "/templates/index.html")
+	tmpl, err := template.ParseFiles(wd + "/templates/homepage.html")
 	if err != nil {
 		log.Fatal("Template error:", err)
 		return
