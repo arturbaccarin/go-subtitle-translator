@@ -18,7 +18,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	wd, _ := os.Getwd()
 
-	tmpl, err := template.ParseFiles(wd + "/templates/base.html")
+	tmpl, err := template.ParseFiles(wd + "/templates/index.html")
 	if err != nil {
 		log.Fatal("Template error:", err)
 		return

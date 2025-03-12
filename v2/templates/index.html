@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Title}}</title>
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>{{.Heading}}</h1>
+        <form action="/translate" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="srtFile">Upload your SRT Subtitle file:</label>
+                <input type="file" id="srtFile" name="srtFile" accept=".srt" required>
+            </div>
+            <div class="form-group">
+                <label for="originalLang">Original Language of SRT:</label>
+                <select id="originalLang" name="originalLang" required>
+                    <option value="en">English</option>
+                    <option value="es">Spanish</option>
+                    <option value="fr">French</option>
+                    <option value="de">German</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="targetLang">Language to Translate to:</label>
+                <select id="targetLang" name="targetLang" required>
+                    <option value="es">Spanish</option>
+                    <option value="fr">French</option>
+                    <option value="de">German</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
+            <button type="submit">Translate and Download</button>
+        </form>
+    </div>
+
+</body>
+
+</html>
