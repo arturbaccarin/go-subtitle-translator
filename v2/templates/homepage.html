@@ -12,7 +12,9 @@
 
     <div class="container">
         <h1>{{.Heading}}</h1>
-        <form id="translateForm" action="/translate" method="POST" enctype="multipart/form-data">
+
+        <!-- Translation Form -->
+        <form id="translateForm" action="/translate" method="POST" enctype="multipart/form-data" target="hiddenIframe">
             <div class="form-group">
                 <label for="srtFile">Upload your SRT Subtitle file:</label>
                 <input type="file" id="srtFile" name="srtFile" accept=".srt" required>
@@ -37,52 +39,32 @@
         </form>
 
         <!-- Download Completed Message -->
-        <div id="downloadMessage" class="hidden">
-            <p class="success-message">Download Completed!</p>
+        <div id="downloadMessage" style="display: none; margin-top: 20px; text-align: center;">
+            <p class="success-message">Download Completed!
+            </p>
             <button id="newFileButton" class="new-file-btn">Upload Another File</button>
         </div>
+
+        <!-- Hidden iframe to handle the backend download -->
+        <iframe id="hiddenIframe" name="hiddenIframe" style="display: none;"></iframe>
     </div>
 
     <script>
         const form = document.getElementById('translateForm');
         const downloadMessage = document.getElementById('downloadMessage');
-        const submitButton = document.getElementById('submitButton');
         const newFileButton = document.getElementById('newFileButton');
 
-        form.addEventListener('submit', (e) => {
-            e.preventDefault(); // Prevent default form submission
-
-            // Simulate form submission and download (replace with actual logic if needed)
-            const formData = new FormData(form);
-            fetch('/translate', {
-                method: 'POST',
-                body: formData
-            }).then(response => {
-                if (response.ok) {
-                    // Simulate download - trigger download or handle accordingly
-                    response.blob().then(blob => {
-                        const link = document.createElement('a');
-                        link.href = URL.createObjectURL(blob);
-                        link.download = 'translated-subtitles.srt';
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-
-                        // Show success message after download
-                        form.style.display = 'none';
-                        downloadMessage.classList.remove('hidden');
-                    });
-                } else {
-                    alert('Translation failed. Please try again.');
-                }
-            }).catch(() => alert('An error occurred.'));
+        form.addEventListener('submit', () => {
+            // Show the download message after submission
+            form.style.display = 'none';
+            downloadMessage.style.display = 'block';
         });
 
         newFileButton.addEventListener('click', () => {
-            // Reset form and show it again
+            // Reset the form and show it again
             form.reset();
             form.style.display = 'flex';
-            downloadMessage.classList.add('hidden');
+            downloadMessage.style.display = 'none';
         });
     </script>
 
