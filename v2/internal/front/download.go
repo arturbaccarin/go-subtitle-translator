@@ -2,13 +2,12 @@ package front
 
 import (
 	"net/http"
-	"os"
+	"path/filepath"
 )
 
 func DownloadHandler(w http.ResponseWriter, r *http.Request) {
-	wd, _ := os.Getwd()
-	name := wd + "/uploads/translated.srt"
+	filename := filepath.Base(translatedFilePath)
 
-	w.Header().Set("Content-Disposition", "attachment; filename=translated.srt")
-	http.ServeFile(w, r, name)
+	w.Header().Set("Content-Disposition", "attachment; filename="+filename)
+	http.ServeFile(w, r, translatedFilePath)
 }

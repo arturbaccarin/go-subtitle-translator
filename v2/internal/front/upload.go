@@ -3,8 +3,13 @@ package front
 import (
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/arturbaccarin/go-subtitle-translator/internal/translate"
+)
+
+var (
+	translatedFilePath string
 )
 
 func TranslateHandler(w http.ResponseWriter, r *http.Request) {
@@ -20,14 +25,14 @@ func TranslateHandler(w http.ResponseWriter, r *http.Request) {
 		originalLang := r.FormValue("originalLang")
 		targetLang := r.FormValue("targetLang")
 
-		file, _, err := r.FormFile("srtFile")
+		file, fileHeader, err := r.FormFile("srtFile")
 		if err != nil {
 			http.Error(w, "Unable to retrieve file", http.StatusBadRequest)
 			return
 		}
 		defer file.Close()
 
-		originalFilePath := wd + "/uploads/original.srt"
+		originalFilePath := wd + "/uploads/" + fileHeader.Filename
 		dst, err := os.Create(originalFilePath)
 		if err != nil {
 			http.Error(w, "Unable to save file", http.StatusInternalServerError)
@@ -41,7 +46,8 @@ func TranslateHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		translatedFilePath := wd + "/uploads/translated.srt"
+		translatedFilePath = strings.Replace(originalFilePath, ".srt", "_translated.srt", 1)
+
 		err = translate.SRT(originalFilePath, translatedFilePath, originalLang, targetLang)
 		if err != nil {
 			http.Error(w, "Translation failed", http.StatusInternalServerError)
