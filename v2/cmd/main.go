@@ -18,7 +18,9 @@ func main() {
 	}
 
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
-	http.HandleFunc("/", front.Handler)
+	http.HandleFunc("/", front.HomepageHandler)
+	http.HandleFunc("/translate", front.TranslateHandler)
+	http.HandleFunc("/download", front.DownloadHandler)
 
 	log.Println("Server started on port 8080")
 	err = http.ListenAndServe(":8080", nil)
