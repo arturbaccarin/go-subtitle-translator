@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"strings"
 
 	"github.com/arturbaccarin/go-subtitle-translator/pkg/subtitlereader"
 	"github.com/arturbaccarin/go-subtitle-translator/pkg/translator"
@@ -48,11 +47,8 @@ func (st *SubtitleTranslator) Translate() ([]*subtitlereader.Subtitle, error) {
 	return subtitles, nil
 }
 
-func (st *SubtitleTranslator) SaveSRT(subtitles []*subtitlereader.Subtitle) error {
-	filename := strings.Split(st.fileToTranslate, ".")[0]
-	filename = filename + "_translated.srt"
-
-	file, err := os.Create(filename)
+func (st *SubtitleTranslator) SaveSRT(subtitles []*subtitlereader.Subtitle, filePath string) error {
+	file, err := os.Create(filePath)
 	if err != nil {
 		return err
 	}
@@ -66,7 +62,7 @@ func (st *SubtitleTranslator) SaveSRT(subtitles []*subtitlereader.Subtitle) erro
 		}
 	}
 
-	log.Printf("Translated subtitles saved to %s\n", filename)
+	log.Printf("Translated subtitles saved to %s\n", filePath)
 
 	return nil
 }

@@ -1,6 +1,7 @@
 package translate
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/arturbaccarin/go-subtitle-translator/internal/subtitletranslator"
@@ -9,21 +10,22 @@ import (
 	"github.com/arturbaccarin/go-subtitle-translator/pkg/translator/deepl"
 )
 
-func SRT(filePath string, originalLang string, targetLang string) error {
-	reader := srt.NewReader(filePath)
+func SRT(originalFilePath string, translatedFilePath string, originalLang string, targetLang string) error {
+	reader := srt.NewReader(originalFilePath)
 	requester := nethttp.NewNetHTTPRequester()
 	apiClient := deepl.NewAPIClient(os.Getenv("DEEPL_API_KEY"), os.Getenv("DEEPL_HOSTNAME"), requester)
 
-	subtitleTranslator := subtitletranslator.NewSubtitleTranslator(reader, apiClient, filePath)
+	subtitleTranslator := subtitletranslator.NewSubtitleTranslator(reader, apiClient, originalFilePath)
 
 	subtitles, err := subtitleTranslator.Translate()
 	if err != nil {
-		panic(err)
+		return fmt.Errorf("error translating subtitles: %v", err)
 	}
 
-	err = subtitleTranslator.SaveSRT(subtitles)
+	err = subtitleTranslator.SaveSRT(subtitles, translatedFilePath)
 	if err != nil {
 		panic(err)
 	}
 
+	return nil
 }
