@@ -86,6 +86,38 @@ button:hover {
     background-color: #218838;
 }
 
+.hidden {
+    display: none;
+}
+
+/* Success Message */
+.success-message {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* New File Button */
+.new-file-btn {
+    background-color: #28a745;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    width: 100%;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.new-file-btn:hover {
+    background-color: #218838;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
