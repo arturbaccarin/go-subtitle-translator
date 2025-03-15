@@ -7,8 +7,10 @@ import (
 	"github.com/arturbaccarin/go-subtitle-translator/internal/translate"
 )
 
-func translateHandler(w http.ResponseWriter, r *http.Request) {
+func TranslateHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
+		wd, _ := os.Getwd()
+
 		err := r.ParseMultipartForm(500 * 1024) // 500 KB limit
 		if err != nil {
 			http.Error(w, "Unable to parse form", http.StatusBadRequest)
@@ -25,7 +27,7 @@ func translateHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		defer file.Close()
 
-		originalFilePath := "uploads/original.srt"
+		originalFilePath := wd + "/uploads/original.srt"
 		dst, err := os.Create(originalFilePath)
 		if err != nil {
 			http.Error(w, "Unable to save file", http.StatusInternalServerError)
@@ -39,7 +41,7 @@ func translateHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		translatedFilePath := "uploads/translated.srt"
+		translatedFilePath := wd + "/uploads/translated.srt"
 		err = translate.SRT(originalFilePath, translatedFilePath, originalLang, targetLang)
 		if err != nil {
 			http.Error(w, "Translation failed", http.StatusInternalServerError)

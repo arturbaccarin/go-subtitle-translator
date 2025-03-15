@@ -1,7 +1,14 @@
 package front
 
-import "net/http"
+import (
+	"net/http"
+	"os"
+)
 
-func downloadHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "uploads/translated.srt")
+func DownloadHandler(w http.ResponseWriter, r *http.Request) {
+	wd, _ := os.Getwd()
+	name := wd + "/uploads/translated.srt"
+
+	w.Header().Set("Content-Disposition", "attachment; filename=translated.srt")
+	http.ServeFile(w, r, name)
 }

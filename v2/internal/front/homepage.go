@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-func Handler(w http.ResponseWriter, r *http.Request) {
+func HomepageHandler(w http.ResponseWriter, r *http.Request) {
 	data := struct {
 		Title   string
 		Heading string
